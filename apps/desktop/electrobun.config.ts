@@ -30,6 +30,7 @@ export default {
     win: {
       bundleCEF: true,
       defaultRenderer: "cef",
+      icon: "./assets/logo.ico"
     },
   },
 } satisfies ElectrobunConfig;
