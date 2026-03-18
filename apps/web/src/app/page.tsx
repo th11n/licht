@@ -22,24 +22,114 @@ export default function HomePage() {
 
   useGSAP(
     () => {
-      if (!planeRef.current || !pathRef.current) return;
+      if (!scope.current || !planeRef.current || !pathRef.current) return;
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+      });
+
+      gsap.set(".hero-copy > *", {
+        opacity: 0,
+        y: 28,
+        filter: "blur(10px)",
+      });
+
+      gsap.set(".hero-card", {
+        opacity: 0,
+        x: 40,
+        y: 20,
+        scale: 0.96,
+        filter: "blur(12px)",
+      });
+
+      gsap.set(".hero-footer", {
+        opacity: 0,
+        y: 14,
+      });
+
+      gsap.set(".hero-grid-bg", {
+        opacity: 0,
+      });
+
+      gsap.set(".hero-path", {
+        opacity: 0,
+      });
 
       gsap.set(planeRef.current, {
+        opacity: 0,
+        scale: 0.9,
         transformOrigin: "50% 50%",
       });
 
-      gsap.to(planeRef.current, {
-        duration: 4.8,
-        ease: "power2.out",
-        motionPath: {
-          path: pathRef.current,
-          align: pathRef.current,
-          autoRotate: true,
-          alignOrigin: [0.5, 0.5],
-          start: 0,
-          end: 1,
-        },
-      });
+      tl.to(".hero-grid-bg", {
+        opacity: 1,
+        duration: 0.8,
+      })
+        .to(
+          ".hero-copy > *",
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.9,
+            stagger: 0.12,
+          },
+          0.15
+        )
+        .to(
+          ".hero-card",
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 1,
+          },
+          0.28
+        )
+        .to(
+          ".hero-footer",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+          },
+          0.8
+        )
+        .to(
+          ".hero-path",
+          {
+            opacity: 1,
+            duration: 0.5,
+          },
+          0.5
+        )
+        .to(
+          planeRef.current,
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.35,
+          },
+          0.7
+        )
+        .to(
+          planeRef.current,
+          {
+            duration: 4.8,
+            ease: "power2.out",
+            motionPath: {
+              path: pathRef.current,
+              align: pathRef.current,
+              autoRotate: true,
+              alignOrigin: [0.5, 0.5],
+              start: 0,
+              end: 1,
+            },
+          },
+          0.82
+        );
     },
     { scope }
   );
@@ -49,10 +139,10 @@ export default function HomePage() {
       ref={scope}
       className="min-h-screen overflow-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground"
     >
-      <div className="fixed inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="hero-grid-bg fixed inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       <svg
-        className="pointer-events-none absolute left-0 top-12 h-[260px] w-[1200px] overflow-visible"
+        className="hero-path pointer-events-none absolute left-0 top-12 h-[260px] w-1/2 overflow-visible"
         viewBox="-420 0 1400 260"
         fill="none"
       >
@@ -81,7 +171,7 @@ export default function HomePage() {
 
       <div className="relative mx-auto flex min-h-screen max-w-[75%] flex-col items-center justify-center px-6 py-20 lg:px-10">
         <section className="grid w-full gap-32 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div className="flex flex-col space-y-8">
+          <div className="hero-copy flex flex-col space-y-8">
             <h1 className="text-balance text-5xl font-bold tracking-tight sm:text-7xl lg:leading-[1.1]">
               Bridge the gap between{" "}
               <span className="text-muted-foreground">web & local.</span>
@@ -107,9 +197,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="absolute -inset-4 -z-10 rounded-[40px] bg-primary/5 blur-3xl" />
-
+          <div className="hero-card relative mx-auto w-full max-w-md lg:max-w-none">
             <Card className="overflow-hidden border-border/40 bg-[#0c0c0c] py-0 shadow-2xl ring-1 ring-white/10">
               <div className="flex items-center justify-between border-b border-white/5 bg-[#1a1a1a] px-4 py-2">
                 <div className="flex gap-2">
@@ -171,7 +259,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <footer className="absolute bottom-4 text-muted-foreground">
+        <footer className="hero-footer absolute bottom-4 text-muted-foreground">
           <span>
             Made with ❤️ by{" "}
             <a
