@@ -1,0 +1,24 @@
+{
+  "name": "core",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsdown",
+    "check-types": "tsc -b",
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile core",
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run dist/index.mjs"
+  },
+  "dependencies": {
+    "@licht/env": "workspace:*",
+    "dotenv": "catalog:",
+    "hono": "^4.8.2",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@licht/config": "workspace:*",
+    "@types/bun": "catalog:",
+    "tsdown": "^0.16.5",
+    "typescript": "^5"
+  }
+}

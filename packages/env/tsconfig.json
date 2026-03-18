@@ -1,0 +1,3 @@
+{
+  "extends": "@licht/config/tsconfig.base.json"
+}
