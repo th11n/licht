@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@licht/env": "workspace:*",
     "@licht/ui": "workspace:*",
     "@phosphor-icons/react": "^2.1.10",
     "babel-plugin-react-compiler": "^1.0.0",
