@@ -64,10 +64,9 @@ bun run dev:desktop
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 15+, Tailwind CSS 4, GSAP, Phosphor Icons.
+- **Frontend**: Next.js 16, Tailwind, GSAP, Phosphor Icons.
 - **Backend**: Bun, Hono, Better-SQLite3.
 - **Desktop**: Electrobun.
-- **Monorepo Management**: Turborepo.
 
 ## 📜 License
 
