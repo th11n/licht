@@ -1,10 +1,8 @@
 import type { ElectrobunConfig } from "electrobun";
 
-const webBuildDir = "../web/out";
-
 export default {
   app: {
-    name: "licht",
+    name: "Licht",
     identifier: "dev.bettertstack.licht.desktop",
     version: "0.0.1",
   },
@@ -15,10 +13,11 @@ export default {
     bun: {
       entrypoint: "src/bun/index.ts",
     },
-    copy: {
-      [webBuildDir]: "views/mainview",
-    },
-    watchIgnore: [`${webBuildDir}/**`],
+    watchIgnore: [
+      "../web/.next/**",
+      "../web/node_modules/**",
+      "../web/out/**",
+    ],
     mac: {
       bundleCEF: true,
       defaultRenderer: "cef",
@@ -30,7 +29,7 @@ export default {
     win: {
       bundleCEF: true,
       defaultRenderer: "cef",
-      icon: "./assets/logo.ico"
+      icon: "./assets/logo.ico",
     },
   },
 } satisfies ElectrobunConfig;
