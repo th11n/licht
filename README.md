@@ -62,6 +62,22 @@ To run the desktop app with HMR:
 bun run dev:desktop
 ```
 
+### 🛠️ CLI Usage (Core)
+
+The core engine provides a CLI for manual control and initialization.
+
+1. **Initialize** the workspace:
+   ```bash
+   licht init
+   ```
+
+2. **Start** the Bridge Proxy:
+   ```bash
+   licht start
+   ```
+
+Once the proxy is running, it will listen on `http://127.0.0.1:4317` and be ready to handle requests from the Web UI or Desktop App.
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 16, Tailwind, GSAP, Phosphor Icons.
