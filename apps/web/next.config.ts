@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
   reactCompiler: true,
   output: "standalone",
+  outputFileTracingRoot: path.join(__dirname, "../../"),
   turbopack: {
     root: __dirname,
   },
