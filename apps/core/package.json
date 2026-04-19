@@ -1,31 +1,41 @@
 {
-  "name": "core",
+  "name": "licht-cli",
   "version": "0.0.1",
+  "description": "CLI for initializing and running Licht",
   "type": "module",
-  "main": "dist/index.mjs",
+  "main": "./dist/index.mjs",
   "bin": {
-    "licht": "./bin/licht.js"
+    "licht": "./dist/index.mjs"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsdown src/cli/index.ts --out-dir dist",
-    "check-types": "tsc -b",
-    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/cli/index.ts --outfile licht",
-    "dev": "cd .",
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "npm run check-types && npm run build",
     "dev:init": "bun run src/cli/index.ts init",
     "dev:start": "bun run src/cli/index.ts start",
-    "start": "bun run dist/index.mjs start"
+    "start": "node ./dist/index.mjs start"
   },
   "dependencies": {
     "chalk": "^5.6.2",
-    "dotenv": "catalog:",
+    "dotenv": "^16.4.5",
     "env-paths": "^4.0.0",
     "hono": "^4.8.2",
-    "zod": "catalog:"
+    "zod": "^3.25.0"
   },
   "devDependencies": {
-    "@licht/config": "workspace:*",
-    "@types/bun": "catalog:",
-    "tsdown": "^0.16.5",
-    "typescript": "^5"
+    "@types/bun": "^1.2.15",
+    "tsdown": "^0.16.8",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
