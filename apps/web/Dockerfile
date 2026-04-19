@@ -16,9 +16,11 @@ WORKDIR /app
 RUN corepack enable
 
 COPY --from=pruner /app/out/json/ ./
-COPY --from=pruner /app/out/package-lock.json ./package-lock.json
+COPY --from=pruner /app/out/bun.lock ./bun.lock
 
-RUN npm ci
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
+RUN bun install --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
