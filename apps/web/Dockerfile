@@ -1,8 +1,7 @@
 FROM node:22-bookworm-slim AS base
-
-FROM base AS pruner
 WORKDIR /app
 
+FROM base AS pruner
 RUN corepack enable
 RUN npm install -g turbo
 
@@ -13,13 +12,14 @@ RUN turbo prune web --docker
 FROM base AS installer
 WORKDIR /app
 
-RUN corepack enable
+ENV HUSKY=0
 
 COPY --from=pruner /app/out/json/ ./
 COPY --from=pruner /app/out/bun.lock ./bun.lock
 
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:${PATH}"
+COPY --from=oven/bun:1.2.15 /usr/local/bin/bun /usr/local/bin/bun
+COPY --from=oven/bun:1.2.15 /usr/local/bin/bunx /usr/local/bin/bunx
+
 RUN bun install --frozen-lockfile
 
 FROM base AS builder
@@ -27,13 +27,12 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN corepack enable
+ENV HUSKY=0
 
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=pruner /app/out/full/ ./
 
-RUN npm run build --workspace=web
+RUN cd apps/web && node ../../node_modules/next/dist/bin/next build
 
 FROM node:22-bookworm-slim AS runner
 WORKDIR /app
